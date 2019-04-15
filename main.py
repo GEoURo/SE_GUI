@@ -2,8 +2,6 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox
 from gui import Ui_Dialog
 from core import *
-from Error import *
-
 
 class SuperUIForm(QWidget):
 
@@ -40,9 +38,17 @@ class SuperUIForm(QWidget):
         self.__solilen = 0
 
         self.__rawlist = []
+        self.__result = []
         self.__core = Core()
 
+    def __clear(self):
+        self.__rawlist.clear()
+        self.__result.clear()
+        return
+
     def __click_search(self):
+        self.__clear()
+
         if not self.__wsearch and not self.__csearch:
             self.__prompt_warning(_Main='Illegal running parameter!',
             _Detail='A type of search mode must be selected!')
@@ -71,7 +77,41 @@ class SuperUIForm(QWidget):
                 return
 
         elif self.__inputbyhand:
-            pass
+            buffer = self.ui.inputarea.toPlainText()
+            is_reading = False
+            tmp_word = ''
+            for char in buffer:
+                if char.isalpha():
+                    is_reading = True
+                    tmp_word += char.lower()
+                elif is_reading:
+                    is_reading = False
+                    if not tmp_word in self.__rawlist:
+                        self.__rawlist.append(tmp_word)
+                    tmp_word = ''
+
+        self.__chain_search()
+
+        self.__print_result()
+        
+        return
+
+    def __export_result(self):
+        outfilepath = self.ui.result_output.text()
+        try:
+            outfile = open(outfilepath, 'w+')
+            outfile.write(self.ui.outputarea.toPlainText())
+        except IOError:
+            msg = QMessageBox()
+            msg.setWindowTitle("Error")
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Export Error!")
+            msg.setInformativeText("Cannot write to this file!")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setDefaultButton(QMessageBox.Ok)
+            return msg.exec()
+        finally:
+            outfile.close()
 
     def __read_file(self, _filename):
         if _filename[0] != '/' and _filename[0:2] != './':
@@ -114,6 +154,43 @@ class SuperUIForm(QWidget):
             _Detail="Cannot open file! Please check the address.")
             return False, []
         
+    def __chain_search(self):
+        if not self.__set_solilen:
+            if self.__csearch:
+                self.__core.chain_char(self.__rawlist, self.__headchar, self.__tailchar)
+                self.__result = self.__core.get_result()
+            elif self.__wsearch:
+                self.__core.chain_word(self.__rawlist, self.__headchar, self.__tailchar)
+                self.__result = self.__core.get_result()
+
+        else:
+            self.__core.chain_num(self.__rawlist, self.__headchar, self.__tailchar, self.__solilen, self.__wsearch)
+            self.__result = self.__core.get_result()
+        
+    def __print_result(self):
+        self.ui.outputarea.clear()
+        if not self.__solilen:
+            if len(self.__result) == 1 and self.__searchchain[0].wordcnt == 0:
+                self.ui.outputarea.setText("There isn't a solitaire that matches the input requirements.\n")
+
+            else:
+                print_chain = self.__result[0]
+                self.ui.outputarea.setText("----------------------\n")
+                if print_chain.wordcnt >= 1:
+                    self.ui.outputarea.setText("The length of this solitaire is %d.\n" % print_chain.wordcnt)
+                else:
+                    self.ui.outputarea.setText("The solitaire is empty.\n")
+
+                if print_chain.charcnt == 1:
+                    self.ui.outputarea.setText("There is only one character in the solitaire.\n")
+                else:
+                    self.ui.outputarea.setText("There are %d characters in the solitaire.\n\n" % print_chain.charcnt)
+
+                #for word in print_chain.searchchain:
+              #      self.ui.outputarea.setText(word.member.word() + '\n')
+
+
+
     def __prompt_warning(self, _Title="Warning", _Main='', _Detail=''):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Warning)
@@ -155,28 +232,6 @@ class SuperUIForm(QWidget):
     def __inputMode(self):
         self.__inputbyhand = self.ui.byHand.isChecked()
         self.__inputbyfile = not self.__inputbyhand
-
-    def __export_result(self):
-        outfilepath = self.ui.result_output.text()
-        try:
-            outfile = open(outfilepath, 'w+')
-            outfile.write(self.ui.outputarea.toPlainText())
-        except IOError:
-            msg = QMessageBox()
-            msg.setWindowTitle("Error")
-            msg.setIcon(QMessageBox.Critical)
-            msg.setText("Export Error!")
-            msg.setInformativeText("Cannot write to this file!")
-            msg.setStandardButtons(QMessageBox.Ok)
-            msg.setDefaultButton(QMessageBox.Ok)
-            return msg.exec()
-        finally:            
-            outfile.close()
-
-    def __print_result(self):
-        return
-        
-
 
 
 if __name__ == '__main__':

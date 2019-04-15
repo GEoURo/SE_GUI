@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a0a2432d-d4cb-45a1-a508-3bd92778a1a8" name="Default Changelist" comment="" />
+    <list default="true" id="a0a2432d-d4cb-45a1-a508-3bd92778a1a8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,33 +22,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-240">
-              <caret line="229" column="36" selection-start-line="229" selection-start-column="36" selection-end-line="229" selection-end-column="36" />
+            <state relative-caret-position="434">
+              <caret line="184" selection-start-line="184" selection-end-line="184" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#3309#3320#1" />
-                <element signature="e#3330#5314#0" />
-                <element signature="e#5175#5314#0" />
-                <element signature="e#5747#6176#0" />
-                <element signature="e#6255#6592#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="405" column="73" selection-start-line="405" selection-start-column="19" selection-end-line="405" selection-end-column="73" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#3885#12023#0" />
-                <element signature="e#12316#13870#0" />
-                <element signature="e#13925#15475#0" />
-                <element signature="e#15545#17226#0" />
-                <element signature="e#17747#18423#0" />
-                <element signature="e#18454#19474#0" />
+                <element signature="e#3647#4243#0" />
+                <element signature="e#3624#5150#0" />
+                <element signature="e#5198#5764#0" />
+                <element signature="e#5453#5733#0" />
               </folding>
             </state>
           </provider>
@@ -111,6 +97,9 @@
       <replace>frontlist</replace>
     </replaceStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -149,6 +138,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -231,11 +221,13 @@
       <workItem from="1553762795571" duration="8751000" />
       <workItem from="1553948256183" duration="3000" />
       <workItem from="1555035499598" duration="30400000" />
+      <workItem from="1555302724491" duration="365000" />
+      <workItem from="1555303275563" duration="3011000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39154000" />
+    <option name="totallyTimeSpent" value="42530000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -247,16 +239,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="23" width="1680" height="952" extended-state="6" />
+    <frame x="0" y="23" width="1680" height="952" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14224665" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14529915" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3523256" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.34069768" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.522093" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.35581395" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32906976" />
@@ -288,9 +280,13 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="curword.word()" language="Python" />
+        <watch expression="word" language="Python" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SELab01GUI$main.coverage" NAME="main Coverage Results" MODIFIED="1555306196480" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SELab01GUI$core.coverage" NAME="core Coverage Results" MODIFIED="1555305321258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -301,6 +297,21 @@
       </expression>
     </expressions>
     <expressions id="watch">
+      <expression>
+        <expression-string>word</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>word.word()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>chain.searchchain[1:]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>curword.word()</expression-string>
         <language-id>Python</language-id>
@@ -331,26 +342,6 @@
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>self.__searchchain</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(self.__searchchain) == 1</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>self.__searchchain[0].searchchain[0].member</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>search_chain.searchchain[1:]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
@@ -358,11 +349,7 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$USER_HOME$/Desktop/finalRun.py" />
-    <entry file="file://$PROJECT_DIR$/src/output.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-844" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/output.h" />
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -370,31 +357,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test1.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1810">
-          <caret line="344" column="4" selection-start-line="344" selection-start-column="4" selection-end-line="344" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-            <element signature="e#0#11884#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/input.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test1.txt" />
+    <entry file="file://$PROJECT_DIR$/src/Core.h" />
+    <entry file="file://$PROJECT_DIR$/input.py" />
     <entry file="file://$PROJECT_DIR$/Error.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -411,31 +376,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="405" column="73" selection-start-line="405" selection-start-column="19" selection-end-line="405" selection-end-column="73" />
+        <state relative-caret-position="495">
+          <caret line="453" column="88" lean-forward="true" selection-start-line="453" selection-start-column="22" selection-end-line="453" selection-end-column="88" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
             <element signature="e#3885#12023#0" />
-            <element signature="e#12316#13870#0" />
-            <element signature="e#13925#15475#0" />
-            <element signature="e#15545#17226#0" />
-            <element signature="e#17747#18423#0" />
-            <element signature="e#18454#19474#0" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-631" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-240">
-          <caret line="229" column="36" selection-start-line="229" selection-start-column="36" selection-end-line="229" selection-end-column="36" />
+        <state relative-caret-position="434">
+          <caret line="184" selection-start-line="184" selection-end-line="184" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#3309#3320#1" />
-            <element signature="e#3330#5314#0" />
-            <element signature="e#5175#5314#0" />
-            <element signature="e#5747#6176#0" />
-            <element signature="e#6255#6592#0" />
+            <element signature="e#3647#4243#0" />
+            <element signature="e#3624#5150#0" />
+            <element signature="e#5198#5764#0" />
+            <element signature="e#5453#5733#0" />
           </folding>
         </state>
       </provider>

@@ -306,6 +306,8 @@ class Core:
                 self.__tmpchain.searchchain[0].next_search_char = i
                 self.__search(head, tail ,0, True)
 
+        self.__rearrange_search_result(head)
+
         # For console printing
         # self.print_for_num()
         # self.print()
@@ -346,6 +348,8 @@ class Core:
             for i in range(26):
                 self.__tmpchain.searchchain[0].next_search_char = i
                 self.__search(head, tail, 0, False)
+
+        self.__rearrange_search_result(head)
 
         # For console printing
         # self.print_for_num()
@@ -390,16 +394,23 @@ class Core:
                 self.__tmpchain.searchchain[0].next_search_char = i
                 self.__search(head, tail, length, w_or_c)
 
+        self.__rearrange_search_result(head)
+
         # For console printing
         # self.print_for_num()
         # self.print()
         return deepcopy(self.__searchchain)
 
+    def __rearrange_search_result(self, head):
+        for chain in self.__searchchain:
+            chain.searchchain.pop(0)
+            if head == '':
+                chain.searchchain.reverse()
+
     def print_for_num(self):
-        search_chain: Chain
-        self.__searchchain:list[Chain]
+        # search_chain: Chain
+        # self.__searchchain:list[Chain]
         if len(self.__searchchain) == 1 \
-                and self.__searchchain[0].searchchain[0].member == '\0'\
                 and self.__searchchain[0].wordcnt == 0:
             print("There isn't a solitaire that matches the input requirements.")
         else:
@@ -417,16 +428,15 @@ class Core:
                 else:
                     print("There are %d characters in the solitaire.\n" % search_chain.charcnt)
 
-                for node in search_chain.searchchain[1:]:
+                for node in search_chain.searchchain:
                     print(node.member.word())
 
                 print()
 
     def print(self):
-        search_chain: Chain
-        self.__searchchain: list[Chain]
+        # search_chain: Chain
+        # self.__searchchain: list[Chain]
         if len(self.__searchchain) == 1 \
-                and self.__searchchain[0].searchchain[0].member == '\0' \
                 and self.__searchchain[0].wordcnt == 0:
             print("There isn't a solitaire that matches the input requirements.")
         else:
@@ -444,7 +454,7 @@ class Core:
                 print("There are %d characters in the solitaire.\n" % printchain.charcnt)
 
             node: Word
-            for node in printchain.searchchain[1:]:
+            for node in printchain.searchchain:
                 print(node.member.word())
 
             print()
@@ -454,7 +464,6 @@ if __name__ == "__main__":
     word1 = ['thed', 'dota', 'dadq', 'kingase', 'astralis', 'solitaire', 'equality', 'yes', 'yellow', 'youngs', 'yon', 'ngs', 'you', 'ugs']
     word2 = [['thed', 'dota', 'dadq', 'kingase', 'astralis'], ['solitaire', 'equality', 'yes', 'yellow']]
     core = Core()
-    # core.chain_char(word1, '', '')
-    # print()
+    # core.chain_char(word1, '', 'e')
     # core.chain_word(word1, '', '')
-    # core.chain_num(words=word1, head='', tail='', length=7, w_or_c=False)
+    # core.chain_num(words=word1, head='t', tail='', length=6, w_or_c=False)
