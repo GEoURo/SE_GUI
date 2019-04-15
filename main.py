@@ -39,31 +39,91 @@ class SuperUIForm(QWidget):
         self.__tailchar = ''
         self.__solilen = 0
 
+        self.__rawlist = []
+        self.__core = Core()
+
     def __click_search(self):
         if not self.__wsearch and not self.__csearch:
-            QMessageBox.warning(self, 'Illegal running parameter!', 'A type of search mode must be selected!')
+            self.__prompt_warning(_Main='Illegal running parameter!',
+            _Detail='A type of search mode must be selected!')
             return
         if not self.__inputbyfile and not self.__inputbyhand:
-            QMessageBox.warning(self, 'Missing input Method!', 'A type of input method must be selected!')
+            self.__prompt_warning(_Main='Missing input Method!',
+            _Detail='A type of input method must be selected!')
             return
         if self.__set_headchar and (not self.__headchar.isalpha() or len(self.__headchar) != 1):
-            QMessageBox.warning(self, 'Illegal input character!', 'The assigned head of the chain must be a single alphabet!')
+            self.__prompt_warning(_Main='Illegal head character!',
+            _Detail='The assigned head of the chain must be a single alphabet!')
             return
         if self.__set_tailchar and (not self.__tailchar.isalpha() or len(self.__tailchar) != 1):
-            QMessageBox.warning(self, 'Illegal input character!', 'The assigned tail of the chain must be a single alphabet!')
+            self.__prompt_warning(_Main='Illegal tail character!',
+            _Detail='The assigned tail of the chain must be a single alphabet!')
             return
         if self.__set_solilen and self.__solilen < 1:
-            QMessageBox.warning(self, 'Illegal input number!', 'The assigned length of the chain must be above 0!')
+            self.__prompt_warning(_Main='IIlegal input number!',
+            _Detail='The assigned length of the chain must be above 1!')
             return
 
-        if self.__inputbyhand:
+        if self.__inputbyfile:
+            self.__set_Path()
+            go_on, self.__rawlist = self.__read_file(self.__filepath)
+            if not go_on:
+                return
+
+        elif self.__inputbyhand:
             pass
 
-
-    def __prompt_warning(self, Title="Warning", Main='', Detail=''):
-        return
+    def __read_file(self, _filename):
+        if _filename[0] != '/' and _filename[0:2] != './':
+            msg = QMessageBox()
+            msg.setWindowTitle("Warning")
+            msg.setText("Non absolute address detected!")
+            msg.setInformativeText("Click \"Ok\" to continue the search on current directory or \"Cancel\" to re-enter the address.")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msg.setDefaultButton(QMessageBox.Ok)
+            go_on = msg.exec()
+            if go_on == QMessageBox.Cancel:
+                return False, []
+            else:
+                _filename = "./" + _filename
+        
+        try:
+            in_file = open(_filename, 'r')
+            is_reading = False
+            tmpword = ''
+            wordlist = []
+            while True:
+                tmpchar = in_file.read(1)
+                if tmpchar == '':
+                    break
+                elif tmpchar.isalpha():
+                    is_reading = True
+                    tmpword += tmpchar.lower()
+                elif is_reading:
+                    is_reading = False
+                    if not tmpword in wordlist:
+                        wordlist.append(tmpword)
+                    tmpword = ''
+                
+            in_file.close()
+            return True, wordlist
+        
+        except IOError:
+            self.__prompt_warning(_Main="File operation error!",
+            _Detail="Cannot open file! Please check the address.")
+            return False, []
+        
+    def __prompt_warning(self, _Title="Warning", _Main='', _Detail=''):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+        msg.setWindowTitle(_Title)
+        msg.setText(_Main)
+        msg.setInformativeText(_Detail)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setDefaultButton(QMessageBox.Ok)
+        return msg.exec()
     
-
     def __set_Path(self):
         self.__filepath = self.ui.address_input.text()
 
@@ -97,10 +157,21 @@ class SuperUIForm(QWidget):
         self.__inputbyfile = not self.__inputbyhand
 
     def __export_result(self):
-        outfilepath = './search_result.txt'
-        outfile = open(outfilepath, 'w+')
-        outfile.write(self.ui.outputarea.toPlainText())
-        outfile.close()
+        outfilepath = self.ui.result_output.text()
+        try:
+            outfile = open(outfilepath, 'w+')
+            outfile.write(self.ui.outputarea.toPlainText())
+        except IOError:
+            msg = QMessageBox()
+            msg.setWindowTitle("Error")
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Export Error!")
+            msg.setInformativeText("Cannot write to this file!")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setDefaultButton(QMessageBox.Ok)
+            return msg.exec()
+        finally:            
+            outfile.close()
 
     def __print_result(self):
         return

@@ -1,4 +1,7 @@
 thed
+
+THED
+DoTa
 dota
 dadq
 kingase
