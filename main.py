@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox
 from gui import Ui_Dialog
 from core import *
+from Error import *
 
 class SuperUIForm(QWidget):
 
@@ -65,7 +66,7 @@ class SuperUIForm(QWidget):
             self.__prompt_warning(_Main='Illegal tail character!',
             _Detail='The assigned tail of the chain must be a single alphabet!')
             return
-        if self.__set_solilen and self.__solilen < 1:
+        if self.__set_solilen and self.__solilen <= 1:
             self.__prompt_warning(_Main='IIlegal input number!',
             _Detail='The assigned length of the chain must be above 1!')
             return
@@ -90,10 +91,42 @@ class SuperUIForm(QWidget):
                         self.__rawlist.append(tmp_word)
                     tmp_word = ''
 
-        self.__chain_search()
+        try:
+            self.__chain_search()
+            self.__print_result()
 
-        self.__print_result()
-        
+        except inputError as error:
+            msgbox = QMessageBox()
+            msgbox.setWindowTitle("Error!")
+            msgbox.setIcon(QMessageBox.Critical)
+            msgbox.setText("Input error for core detected!")
+            msgbox.setInformativeText(error.msg)
+            msgbox.setStandardButtons(QMessageBox.Ok)
+            msgbox.setDefaultButton(QMessageBox.Ok)
+            msgbox.exec()
+
+        except syntaxError as error:
+            msgbox = QMessageBox()
+            msgbox.setWindowTitle("Error!")
+            msgbox.setIcon(QMessageBox.Critical)
+            msgbox.setText("Syntax error for core detected!")
+            msgbox.setInformativeText(error.msg)
+            msgbox.setStandardButtons(QMessageBox.Ok)
+            msgbox.setDefaultButton(QMessageBox.Ok)
+            msgbox.exec()
+
+        except runtimeError as error:
+            msgbox = QMessageBox()
+            msgbox.setWindowTitle("Error!")
+            msgbox.setIcon(QMessageBox.Critical)
+            msgbox.setText(error.msg)
+            msgbox.setInformativeText(error.detail)
+            msgbox.setStandardButtons(QMessageBox.Ok)
+            msgbox.setDefaultButton(QMessageBox.Ok)
+            msgbox.exec()
+
+
+
         return
 
     def __export_result(self):
@@ -170,26 +203,50 @@ class SuperUIForm(QWidget):
     def __print_result(self):
         self.ui.outputarea.clear()
         if not self.__solilen:
-            if len(self.__result) == 1 and self.__searchchain[0].wordcnt == 0:
-                self.ui.outputarea.setText("There isn't a solitaire that matches the input requirements.\n")
+            if len(self.__result) == 1 and self.__result[0].wordcnt == 0:
+                self.ui.outputarea.setText("There isn't a solitaire that matches the input requirements.")
 
             else:
                 print_chain = self.__result[0]
-                self.ui.outputarea.setText("----------------------\n")
+                self.ui.outputarea.setText("-----------------------------------")
                 if print_chain.wordcnt >= 1:
-                    self.ui.outputarea.setText("The length of this solitaire is %d.\n" % print_chain.wordcnt)
+                    self.ui.outputarea.append("The length of this solitaire is %d." % print_chain.wordcnt)
                 else:
-                    self.ui.outputarea.setText("The solitaire is empty.\n")
+                    self.ui.outputarea.append("The solitaire is empty.")
 
                 if print_chain.charcnt == 1:
-                    self.ui.outputarea.setText("There is only one character in the solitaire.\n")
+                    self.ui.outputarea.append("There is only one character in the solitaire.")
                 else:
-                    self.ui.outputarea.setText("There are %d characters in the solitaire.\n\n" % print_chain.charcnt)
+                    self.ui.outputarea.append("There are %d characters in the solitaire.\n" % print_chain.charcnt)
 
-                #for word in print_chain.searchchain:
-              #      self.ui.outputarea.setText(word.member.word() + '\n')
+                for word in print_chain.searchchain:
+                    self.ui.outputarea.append(word.member.word())
 
+        else:
+            if len(self.__result) == 1 and self.__result[0].wordcnt == 0:
+                self.ui.outputarea.setText("There isn't a solitaire that matches the input requirements.")
 
+            else:
+                self.ui.outputarea.setText("Total solitaire number: %d" % len(self.__result))
+                for i, print_chain in enumerate(self.__result):
+                    self.ui.outputarea.append("-----------------------------------")
+                    self.ui.outputarea.append("No: %d" % (i + 1))
+                    if print_chain.wordcnt >= 1:
+                        self.ui.outputarea.append("The length of this solitaire is %d." % print_chain.wordcnt)
+                    else:
+                        self.ui.outputarea.append("The solitaire is empty.")
+
+                    if print_chain.charcnt == 1:
+                        self.ui.outputarea.append("There is only one character in the solitaire.")
+                    else:
+                        self.ui.outputarea.append("There are %d characters in the solitaire.\n" % print_chain.charcnt)
+
+                    for word in print_chain.searchchain:
+                        self.ui.outputarea.append(word.member.word())
+
+                    self.ui.outputarea.append('\n')
+
+        return
 
     def __prompt_warning(self, _Title="Warning", _Main='', _Detail=''):
         msg = QMessageBox()
